@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+         <aop:aspectj-autoproxy />
+        <context:annotation-config />
+	<context:component-scan base-package="com.zhiyou100"/>
+	<!-- 
+    <bean id="serviceMessage" class="com.zhiyou100.springdemo.service.impl.MessageServiceImpl" />
+    <bean id="proxy" class="com.zhiyou100.springdemo.service.proxy.ServiceProxy" />
+    <aop:config>
+        <aop:pointcut expression="execution(public * com.zhiyou100..service.impl.MessageServiceImpl.*(..))" id="fault"/>
+        <aop:pointcut expression="execution(public * com.zhiyou100..service.impl.MessageServiceImpl.*(..))" id="fault1"/>
+        <aop:pointcut expression="execution(public * com.zhiyou100..service.impl.MessageServiceImpl.*(..))" id="fault2"/>
+        <aop:pointcut expression="execution(public * com.zhiyou100..service.impl.MessageServiceImpl.*(..))" id="fault3"/>
+        <aop:aspect ref="proxy">
+           <aop:before method="beforeinvoke" pointcut="execution(public * com.zhiyou100..service.impl.MessageServiceImpl.*(..)) and args(id)" arg-names="id" />
+           <aop:after method="afterinvoke" pointcut-ref="fault"/>
+           <aop:after-returning method="returninvoke" pointcut-ref="fault1" returning="v" arg-names="v"/>
+           <aop:after-throwing method="throwInvoke" pointcut-ref="fault2" throwing="e" arg-names="e"/>
+           <aop:around method="arroundInvoke" pointcut-ref="fault3"/>
+        </aop:aspect>
+    </aop:config>
+	 -->
+	<bean id="ServiceImpl1" class="com.zhiyou100.springdemo.service.impl.MessageServiceImpl1" />
+	<bean id="proxy1" class="com.zhiyou100.springdemo.service.proxy.ServiceProxy1" />
+	<aop:config>
+	<aop:pointcut expression="execution(public * com.zhiyou100..service.impl.MessageServiceImpl1.*(..))" id="def"/>
+	<aop:aspect ref="proxy1">
+	  <aop:before method="before" pointcut-ref="def"/>
+	  <aop:after method="after" pointcut-ref="def"/>
+	</aop:aspect>
+	</aop:config>
+	
+	<bean id="dept" class="com.zhiyou100.springdemo.vo.Dept">
+		<constructor-arg index="0" value="123" />
+		<constructor-arg index="1" value="研发部" />
+		<constructor-arg index="2" value="河南" />
+	</bean>
+	<bean id="dept1" class="com.zhiyou100.springdemo.vo.Dept">
+		<property name="deptno" value="122" />
+		<property name="dname" value="劳动部" />
+		<property name="loc" value="北京" />
+	</bean>
+	<bean id="emp" class="com.zhiyou100.springdemo.vo.Emp">
+		<property name="empno">
+			<value>111</value>
+		</property>
+		<property name="ename" value="小敏" />
+		<property name="sal" value="33.0" />
+		<property name="dept" ref="dept2" />
+	</bean>
+	<bean id="dept2" class="com.zhiyou100.springdemo.vo.Dept">
+		<property name="deptno" value="10" />
+		<property name="dname" value="开发部" />
+		<property name="loc" value="北京" />
+	</bean>
+	<bean id="emp1" class="com.zhiyou100.springdemo.vo.Emp" p:empno="222"
+		p:ename="小青" p:sal="332.0" p:dept-ref="dept3" />
+	<bean id="dept3" class="com.zhiyou100.springdemo.vo.Dept"
+		p:deptno="343" p:dname="后勤部" p:loc="西藏" />
+
+	<bean id="dept4" class="com.zhiyou100.springdemo.vo.Dept">
+		<property name="deptno" value="13" />
+		<property name="dname" value="开发" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+		<property name="loc" value="北京" />
+		<property name="group">
+			<array value-type="java.lang.String">
+				<value>项目组一</value>
+				<value>项目组二</value>
+			</array>
+		</property>
+	</bean>
+
+	<bean id="dept5" class="com.zhiyou100.springdemo.vo.Dept">
+		<property name="deptno" value="17" />
+		<property name="dname" value="开发组" />
+		<property name="loc" value="北京" />
+		<property name="groups">
+			<set>
+				<value>ERP项目组</value>
+				<value>CRM项目组</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="dept6" class="com.zhiyou100.springdemo.vo.Dept">
+		<property name="deptno" value="19" />
+		<property name="dname" value="研究组" />
+		<property name="loc" value="北京" />
+		<property name="groups1">
+			<map>
+				<entry key="110" value="ERP项目组" />
+				<entry key="111" value="ERP项目组2" />
+				<entry key="120" value="CRM项目组" />
+				                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+			</map>
+		</property>
+		</bean>
+</beans>  
+	
